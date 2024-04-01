@@ -24,9 +24,11 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, new HotelSearchFragment());
-        fragmentTransaction.commit();
+        if (savedInstanceState == null) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame_layout, new HotelSearchFragment());
+            fragmentTransaction.commit();
+        }
     }
 
 }

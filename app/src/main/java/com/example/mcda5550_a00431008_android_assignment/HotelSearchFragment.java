@@ -1,7 +1,5 @@
 package com.example.mcda5550_a00431008_android_assignment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +8,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,7 +28,7 @@ public class HotelSearchFragment extends Fragment {
     EditText guestsCountEditText, guestNameEditText;
     Button searchButton;
     DatePicker checkInDatePicker, checkOutDatePicker;
-    String checkInDate, checkOutDate, numberOfGuests;
+    String checkInDate, checkOutDate, numberOfGuests, guestName;
 
 
     @Override
@@ -62,34 +61,34 @@ public class HotelSearchFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkInDate = getDateFromCalendar(checkInDatePicker);
-                checkOutDate = getDateFromCalendar(checkOutDatePicker);
-
+                checkInDate = dateFormatter(checkInDatePicker);
+                checkOutDate = dateFormatter(checkOutDatePicker);
+                guestName = guestNameEditText.getText().toString();
                 //Get input of guests count
                 numberOfGuests = guestsCountEditText.getText().toString();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("checkInDate", checkInDate);
-                bundle.putString("checkOutDate", checkOutDate);
-                bundle.putString("numberOfGuests", numberOfGuests);
-                bundle.putString("guestName", guestNameEditText.getText().toString());
+                if (dateValidator(checkInDatePicker, checkOutDatePicker)
+                        && fieldsValidator(numberOfGuests, guestName)
+                ) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("checkInDate", checkInDate);
+                    bundle.putString("checkOutDate", checkOutDate);
+                    bundle.putString("numberOfGuests", numberOfGuests);
+                    bundle.putString("guestName", guestName);
 
+                    HotelsListFragment hotelsListFragment = new HotelsListFragment();
+                    hotelsListFragment.setArguments(bundle);
 
-                // set Fragment class Arguments
-                HotelsListFragment hotelsListFragment = new HotelsListFragment();
-                hotelsListFragment.setArguments(bundle);
-
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.main_layout, hotelsListFragment);
-                fragmentTransaction.remove(HotelSearchFragment.this);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_layout, hotelsListFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
             }
         });
     }
 
-    // Function to get the date object
-    private String getDateFromCalendar(DatePicker datePicker) {
+    private Calendar getCalendarFor(DatePicker datePicker) {
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();
         int year = datePicker.getYear();
@@ -97,10 +96,52 @@ public class HotelSearchFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
 
+        return  calendar;
+    }
+
+    private String dateFormatter(DatePicker datePicker) {
+        Calendar calendar = getCalendarFor(datePicker);
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = simpleDateFormat.format(calendar.getTime());
 
         return formattedDate;
+    }
+
+    private boolean dateValidator (DatePicker checkInDate, DatePicker checkOutDate){
+        Calendar checkInCal = getCalendarFor(checkInDate);
+        Calendar checkOutCal = getCalendarFor(checkOutDate);
+        Calendar today = Calendar.getInstance();
+
+        if (checkInCal.before(today)) {
+            Toast.makeText(getContext(), "Check-in date cannot be in the past.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (checkOutCal.before(checkInCal)) {
+            Toast.makeText(getContext(), "Check-out date must be after check-in date.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean fieldsValidator(String numGuests, String nameGuest) {
+        int num = numGuests.isEmpty() ? 0: Integer.parseInt(numGuests);
+        if (num <= 0) {
+            Toast.makeText(getContext(), "Number of guests must be at least 1", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!nameGuest.matches("[a-zA-Z ]+")) {
+            Toast.makeText(getContext(), "Name can only contain alphabets", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (nameGuest.length() > 50) {
+            Toast.makeText(getContext(), "Name must be less than 50 characters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
 }

@@ -15,14 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HotelsListFragment extends Fragment {
 
     View view;
     TextView headingTextView;
     ProgressBar progressBar;
-    List<Hotel> userListResponseData;
+    ArrayList<Hotel> userListResponseData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,25 +46,25 @@ public class HotelsListFragment extends Fragment {
 
         //Set up the header
         headingTextView.setText("Welcome " + guestName +
-                ", displaying hotel for " + numberOfGuests + " guests staying from " + checkInDate +
+                "!! Displaying hotel for " + numberOfGuests + " guests staying from " + checkInDate +
                 " to " + checkOutDate);
 
         getHotelsListsData();
     }
 
     public ArrayList<Hotel> initHotelListData() {
-        ArrayList<Hotel> list = new ArrayList<>();
+        ArrayList<Hotel> list = new ArrayList<Hotel>();
 
-        list.add(new Hotel("Hotel California", "1500$", "true"));
-        list.add(new Hotel("Grand Plaza Hotel", "1200$", "false"));
-        list.add(new Hotel("Sunset View Hotel", "900$", "true"));
-        list.add(new Hotel("Ocean Breeze Resort", "1800$", "false"));
-        list.add(new Hotel("Mountain Retreat Inn", "1300$", "true"));
-        list.add(new Hotel("Lakeside Lodge", "1100$", "false"));
-        list.add(new Hotel("Golden Sands Resort", "1600$", "true"));
-        list.add(new Hotel("City Lights Hotel", "1400$", "false"));
-        list.add(new Hotel("Riverfront Suites", "1700$", "true"));
-        list.add(new Hotel("Hilltop Haven Hotel", "1900$", "false"));
+        list.add(new Hotel("Hotel California", "1500$", "Available"));
+        list.add(new Hotel("Grand Plaza Hotel", "1200$", "Not Available"));
+        list.add(new Hotel("Sunset View Hotel", "900$", "Available"));
+        list.add(new Hotel("Ocean Breeze Resort", "1800$", "Not Available"));
+        list.add(new Hotel("Mountain Retreat Inn", "1300$", "Available"));
+        list.add(new Hotel("Lakeside Lodge", "1100$", "Not Available"));
+        list.add(new Hotel("Golden Sands Resort", "1600$", "Available"));
+        list.add(new Hotel("City Lights Hotel", "1400$", "Not Available"));
+        list.add(new Hotel("Riverfront Suites", "1700$", "Available"));
+        list.add(new Hotel("Hilltop Haven Hotel", "1900$", "Not Available"));
         return list;
     }
 
