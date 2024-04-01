@@ -19,11 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
-public class HotelsListFragment extends Fragment implements ItemClickListener {
+public class HotelsListFragment extends Fragment {
 
     View view;
     TextView headingTextView;
@@ -54,13 +50,6 @@ public class HotelsListFragment extends Fragment implements ItemClickListener {
         headingTextView.setText("Welcome user, displaying hotel for " + numberOfGuests + " guests staying from " + checkInDate +
                 " to " + checkOutDate);
 
-
-        // Set up the RecyclerView
-//        ArrayList<HotelListData> hotelListData = initHotelListData();
-//        RecyclerView recyclerView = view.findViewById(R.id.hotel_list_recyclerView);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        HotelListAdapter hotelListAdapter = new HotelListAdapter(getActivity(), hotelListData);
-//        recyclerView.setAdapter(hotelListAdapter);
         getHotelsListsData();
     }
 
@@ -103,33 +92,5 @@ public class HotelsListFragment extends Fragment implements ItemClickListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         HotelListAdapter hotelListAdapter = new HotelListAdapter(getActivity(), userListResponseData);
         recyclerView.setAdapter(hotelListAdapter);
-
-        //Bind the click listener
-        hotelListAdapter.setClickListener(this);
-    }
-
-
-    @Override
-    public void onClick(View view, int position) {
-        HotelListData hotelListData = userListResponseData.get(position);
-
-        String hotelName = hotelListData.getHotelName();
-        String price = hotelListData.getPrice();
-        String availability = hotelListData.getAvailability();
-
-        Bundle bundle = new Bundle();
-        bundle.putString("hotel name", hotelName);
-        bundle.putString("hotel price", price);
-        bundle.putString("hotel availability", availability);
-
-        HotelGuestDetailsFragment hotelGuestDetailsFragment = new HotelGuestDetailsFragment();
-        hotelGuestDetailsFragment.setArguments(bundle);
-
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.remove(HotelsListFragment.this);
-        fragmentTransaction.replace(R.id.main_layout, hotelGuestDetailsFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commitAllowingStateLoss();
-
     }
 }
