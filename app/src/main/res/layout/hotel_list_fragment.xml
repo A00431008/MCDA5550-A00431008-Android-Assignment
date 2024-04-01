@@ -26,9 +26,12 @@
                 android:textSize="25sp"
                 android:textAlignment="center"
                 android:gravity="center_horizontal"
-                tools:text = "Sample text"
                 android:fontFamily="sans-serif"
-                android:textColor="@color/black"/>
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:paddingVertical="20dp"
+                android:background="@color/brown_with_transparency"
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/hotel_list_recyclerView"

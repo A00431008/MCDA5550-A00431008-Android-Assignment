@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class HotelSearchFragment extends Fragment {
 
@@ -111,7 +112,7 @@ public class HotelSearchFragment extends Fragment {
     private boolean dateValidator (DatePicker checkInDate, DatePicker checkOutDate){
         Calendar checkInCal = getCalendarFor(checkInDate);
         Calendar checkOutCal = getCalendarFor(checkOutDate);
-        Calendar today = Calendar.getInstance();
+        Calendar today = Calendar.getInstance(TimeZone.getDefault());
 
         if (checkInCal.before(today)) {
             Toast.makeText(getContext(), "Check-in date cannot be in the past.", Toast.LENGTH_SHORT).show();

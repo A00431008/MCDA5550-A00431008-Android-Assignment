@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MCDA5550-A00431008-Android-Assignment</string>
     <string name="welcome_text">Welcome to Hotel Reservation System</string>
+    <string name="check_in_date_label">Check In Date</string>
+    <string name="check_out_date_label">Check Out Date</string>
+    <string name="search_button_text">SEARCH</string>
 </resources>
