@@ -5,12 +5,15 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +25,8 @@ public class HotelsListFragment extends Fragment {
     TextView headingTextView;
     ProgressBar progressBar;
     ArrayList<Hotel> userListResponseData;
+
+    Button backButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +54,17 @@ public class HotelsListFragment extends Fragment {
                 "!! Displaying hotel for " + numberOfGuests + " guests staying from " + checkInDate +
                 " to " + checkOutDate);
 
+        backButton = view.findViewById(R.id.back_button);
+        // Set up click listener for the back button
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getActivity() != null) {
+                    getActivity().onBackPressed();
+                }
+            }
+        });
+
         getHotelsListsData();
     }
 
@@ -65,6 +81,12 @@ public class HotelsListFragment extends Fragment {
         list.add(new Hotel("City Lights Hotel", "1400$", "Not Available"));
         list.add(new Hotel("Riverfront Suites", "1700$", "Available"));
         list.add(new Hotel("Hilltop Haven Hotel", "1900$", "Not Available"));
+        list.add(new Hotel("Royal Paradise Hotel", "2000$", "Available"));
+        list.add(new Hotel("Silver Moon Resort", "2200$", "Not Available"));
+        list.add(new Hotel("Emerald Isle Inn", "1600$", "Available"));
+        list.add(new Hotel("Tropical Oasis Lodge", "1800$", "Not Available"));
+        list.add(new Hotel("Azure Sky Hotel", "2100$", "Available"));
+
         return list;
     }
 
@@ -92,4 +114,7 @@ public class HotelsListFragment extends Fragment {
         HotelListAdapter hotelListAdapter = new HotelListAdapter(getActivity(), userListResponseData);
         recyclerView.setAdapter(hotelListAdapter);
     }
+
+
+
 }

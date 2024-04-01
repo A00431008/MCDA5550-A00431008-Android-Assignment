@@ -94,7 +94,7 @@ public class HotelSearchFragment extends Fragment {
         int month = datePicker.getMonth();
         int year = datePicker.getYear();
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         calendar.set(year, month, day);
 
         return  calendar;
@@ -115,15 +115,14 @@ public class HotelSearchFragment extends Fragment {
         Calendar today = Calendar.getInstance(TimeZone.getDefault());
 
         if (checkInCal.before(today)) {
-            Toast.makeText(getContext(), "Check-in date cannot be in the past.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Check-in date can't be in the past. Please book for tomorrow or a future date", Toast.LENGTH_SHORT).show();
             return false;
-        }
-
-        if (checkOutCal.before(checkInCal)) {
-            Toast.makeText(getContext(), "Check-out date must be after check-in date.", Toast.LENGTH_SHORT).show();
+        } else if (checkOutCal.before(checkInCal) || (checkOutCal.getTimeInMillis() - checkInCal.getTimeInMillis()) < 24 * 60 * 60 * 1000) {
+            Toast.makeText(getContext(), "Check-out date must be at least one day after the check-in date.", Toast.LENGTH_SHORT).show();
             return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
     private boolean fieldsValidator(String numGuests, String nameGuest) {
@@ -131,18 +130,15 @@ public class HotelSearchFragment extends Fragment {
         if (num <= 0) {
             Toast.makeText(getContext(), "Number of guests must be at least 1", Toast.LENGTH_SHORT).show();
             return false;
-        }
-
-        if (!nameGuest.matches("[a-zA-Z ]+")) {
+        } else if (!nameGuest.matches("[a-zA-Z ]+")) {
             Toast.makeText(getContext(), "Name can only contain alphabets", Toast.LENGTH_SHORT).show();
             return false;
-        }
-
-        if (nameGuest.length() > 50) {
+        } else if (nameGuest.length() > 50) {
             Toast.makeText(getContext(), "Name must be less than 50 characters", Toast.LENGTH_SHORT).show();
             return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
 }
