@@ -1,12 +1,12 @@
 package com.example.mcda5550_a00431008_android_assignment;
 
-public class HotelListData {
+public class Hotel {
 
     String hotelName;
     String price;
     String availability;
 
-    public HotelListData(String hotel_name, String price, String availability) {
+    public Hotel(String hotel_name, String price, String availability) {
         this.hotelName = hotel_name;
         this.price = price;
         this.availability = availability;

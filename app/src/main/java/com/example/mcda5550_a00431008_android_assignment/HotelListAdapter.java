@@ -9,19 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import retrofit.Callback;
 
 public class HotelListAdapter extends RecyclerView.Adapter<HotelListAdapter.ViewHolder> {
 
-    private List<HotelListData> hotelListData;
+    private List<Hotel> hotelListData;
     private LayoutInflater layoutInflater;
     private ItemClickListener clickListener;
 
     //Data gets passed in the constructor
-    HotelListAdapter(Context context, List<HotelListData> hotelListData) {
+    HotelListAdapter(Context context, List<Hotel> hotelListData) {
         this.layoutInflater = LayoutInflater.from(context);
         this.hotelListData = hotelListData;
     }

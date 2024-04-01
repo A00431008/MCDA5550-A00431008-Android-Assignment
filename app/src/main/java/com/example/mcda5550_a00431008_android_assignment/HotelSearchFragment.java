@@ -26,7 +26,7 @@ public class HotelSearchFragment extends Fragment {
     View view;
     ConstraintLayout mainLayout;
     TextView titleTextView;
-    EditText guestsCountEditText;
+    EditText guestsCountEditText, guestNameEditText;
     Button searchButton;
     DatePicker checkInDatePicker, checkOutDatePicker;
     String checkInDate, checkOutDate, numberOfGuests;
@@ -49,7 +49,7 @@ public class HotelSearchFragment extends Fragment {
         titleTextView = view.findViewById(R.id.title_text_view);
 
         guestsCountEditText = view.findViewById(R.id.guests_count_edit_text);
-
+        guestNameEditText = view.findViewById(R.id.guest_name_edit_text);
         searchButton = view.findViewById(R.id.search_button);
 
         checkInDatePicker = view.findViewById(R.id.check_in_date_picker_view);
@@ -69,9 +69,10 @@ public class HotelSearchFragment extends Fragment {
                 numberOfGuests = guestsCountEditText.getText().toString();
 
                 Bundle bundle = new Bundle();
-                bundle.putString("check in date", checkInDate);
-                bundle.putString("check out date", checkOutDate);
-                bundle.putString("number of guests", numberOfGuests);
+                bundle.putString("checkInDate", checkInDate);
+                bundle.putString("checkOutDate", checkOutDate);
+                bundle.putString("numberOfGuests", numberOfGuests);
+                bundle.putString("guestName", guestNameEditText.getText().toString());
 
 
                 // set Fragment class Arguments

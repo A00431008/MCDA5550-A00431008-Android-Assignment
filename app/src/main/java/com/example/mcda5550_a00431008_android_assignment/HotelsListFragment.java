@@ -7,12 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +22,7 @@ public class HotelsListFragment extends Fragment {
     View view;
     TextView headingTextView;
     ProgressBar progressBar;
-    List<HotelListData> userListResponseData;
+    List<Hotel> userListResponseData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,30 +40,32 @@ public class HotelsListFragment extends Fragment {
         headingTextView = view.findViewById(R.id.heading_text_view);
         progressBar = view.findViewById(R.id.progress_bar);
 
-        String checkInDate = getArguments().getString("check in date");
-        String checkOutDate = getArguments().getString("check out date");
-        String numberOfGuests = getArguments().getString("number of guests");
+        String checkInDate = getArguments().getString("checkInDate");
+        String checkOutDate = getArguments().getString("checkOutDate");
+        String numberOfGuests = getArguments().getString("numberOfGuests");
+        String guestName = getArguments().getString("guestName");
 
         //Set up the header
-        headingTextView.setText("Welcome user, displaying hotel for " + numberOfGuests + " guests staying from " + checkInDate +
+        headingTextView.setText("Welcome " + guestName +
+                ", displaying hotel for " + numberOfGuests + " guests staying from " + checkInDate +
                 " to " + checkOutDate);
 
         getHotelsListsData();
     }
 
-    public ArrayList<HotelListData> initHotelListData() {
-        ArrayList<HotelListData> list = new ArrayList<>();
+    public ArrayList<Hotel> initHotelListData() {
+        ArrayList<Hotel> list = new ArrayList<>();
 
-        list.add(new HotelListData("Hotel California", "1500$", "true"));
-        list.add(new HotelListData("Grand Plaza Hotel", "1200$", "false"));
-        list.add(new HotelListData("Sunset View Hotel", "900$", "true"));
-        list.add(new HotelListData("Ocean Breeze Resort", "1800$", "false"));
-        list.add(new HotelListData("Mountain Retreat Inn", "1300$", "true"));
-        list.add(new HotelListData("Lakeside Lodge", "1100$", "false"));
-        list.add(new HotelListData("Golden Sands Resort", "1600$", "true"));
-        list.add(new HotelListData("City Lights Hotel", "1400$", "false"));
-        list.add(new HotelListData("Riverfront Suites", "1700$", "true"));
-        list.add(new HotelListData("Hilltop Haven Hotel", "1900$", "false"));
+        list.add(new Hotel("Hotel California", "1500$", "true"));
+        list.add(new Hotel("Grand Plaza Hotel", "1200$", "false"));
+        list.add(new Hotel("Sunset View Hotel", "900$", "true"));
+        list.add(new Hotel("Ocean Breeze Resort", "1800$", "false"));
+        list.add(new Hotel("Mountain Retreat Inn", "1300$", "true"));
+        list.add(new Hotel("Lakeside Lodge", "1100$", "false"));
+        list.add(new Hotel("Golden Sands Resort", "1600$", "true"));
+        list.add(new Hotel("City Lights Hotel", "1400$", "false"));
+        list.add(new Hotel("Riverfront Suites", "1700$", "true"));
+        list.add(new Hotel("Hilltop Haven Hotel", "1900$", "false"));
         return list;
     }
 
@@ -73,7 +73,7 @@ public class HotelsListFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         // Get mock data directly
-        ArrayList<HotelListData> mockData = initHotelListData();
+        ArrayList<Hotel> mockData = initHotelListData();
 
         // Simulate API response delay
         new Handler().postDelayed(new Runnable() {
